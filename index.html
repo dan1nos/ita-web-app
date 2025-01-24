@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestione Appuntamenti - 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.0/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-4 shadow">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-bold flex items-center">
+        <i class="fas fa-tools mr-2"></i> Gestione Appuntamenti
+      </h1>
+      <button id="toggle-dark-mode" class="bg-blue-900 px-4 py-2 rounded text-sm">Tema Scuro</button>
+    </div>
+  </header>
+
+  <main class="container mx-auto p-6">
+    <!-- Form per aggiungere interventi -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-6">Aggiungi Appuntamento</h2>
+      <form id="task-form"
+        class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-white shadow-md p-6 rounded-lg">
+        <div>
+          <label for="task-name" class="block text-gray-600 font-medium">Nome Intervento</label>
+          <input type="text" id="task-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" placeholder="Es. Manutenzione Climatizzatore" required>
+        </div>
+        <div>
+          <label for="task-type" class="block text-gray-600 font-medium">Tipo</label>
+          <select id="task-type" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+                        <option value="Climatizzatore">Climatizzatore</option>
+                        <option value="Caldaia">Caldaia</option>
+                    </select>
+        </div>
+        <div>
+          <label for="task-date" class="block text-gray-600 font-medium">Data</label>
+          <input type="date" id="task-date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" required>
+        </div>
+        <div>
+          <label for="task-time" class="block text-gray-600 font-medium">Orario</label>
+          <input type="time" id="task-time" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" required>
+        </div>
+        <div>
+          <label for="task-email" class="block text-gray-600 font-medium">Email per Promemoria</label>
+          <input type="email" id="task-email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" placeholder="email@example.com" required>
+        </div>
+        <div class="col-span-full">
+          <button type="submit" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-lg hover:from-green-600 hover:to-green-700 w-full">
+                        <i class="fas fa-plus mr-2"></i> Aggiungi Intervento
+                    </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Calendario -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-6">Calendario Appuntamenti</h2>
+      <div id="calendar" class="bg-white shadow-lg rounded-lg p-4"></div>
+    </section>
+
+    <!-- Statistiche -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-6">Statistiche</h2>
+      <canvas id="stats-chart" class="bg-white shadow-lg rounded-lg p-4"></canvas>
+    </section>
+  </main>
+
+  <script src="scripts.js"></script>
+  <script>
+    document.getElementById('toggle-dark-mode').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
+
+        // Inizializza FullCalendar
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [] // Gli eventi verranno caricati dinamicamente
+            });
+            calendar.render();
+        });
+  </script>
+</body>
+
+</html>
